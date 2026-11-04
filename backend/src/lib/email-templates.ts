@@ -23,12 +23,14 @@ export type DinkHouseEmailOptions = {
   preheader?: string;
   eyebrow?: string;
   heading?: string;
+  /** Full-width image row rendered under the lime divider. Build with emailHero(). */
+  heroHtml?: string;
   bodyHtml: string;
   cta?: DinkHouseEmailCta;
   siteUrl?: string;
 };
 
-const BRAND = {
+export const BRAND = {
   lime: "#B3FF00",
   limeDark: "#8BC700",
   black: "#000000",
@@ -61,7 +63,7 @@ const BRAND = {
   ],
 } as const;
 
-function escapeHtml(value: string): string {
+export function escapeHtml(value: string): string {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -78,11 +80,11 @@ function logoUrl(siteUrl: string): string {
   return `${origin(siteUrl)}/dinklogo.jpg`;
 }
 
-function fontStack(): string {
+export function fontStack(): string {
   return "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 }
 
-function displayStack(): string {
+export function displayStack(): string {
   return "'Bebas Neue', 'Arial Black', Impact, Helvetica, Arial, sans-serif";
 }
 
@@ -198,6 +200,17 @@ export function renderDinkHouseEmail(options: DinkHouseEmailOptions): string {
           <tr>
             <td style="background-color: ${BRAND.lime}; height: 2px; font-size: 0; line-height: 2px;">&nbsp;</td>
           </tr>
+          ${
+            options.heroHtml
+              ? `
+          <tr>
+            <td style="background-color: ${BRAND.charcoal}; padding: 0; font-size: 0; line-height: 0;">
+              ${options.heroHtml}
+            </td>
+          </tr>
+              `
+              : ""
+          }
           <tr>
             <td class="email-pad" style="background-color: ${BRAND.charcoal}; padding: 36px 40px 16px; font-family: ${fontStack()}; font-size: 16px; line-height: 1.6; color: ${BRAND.white};">
               ${options.bodyHtml}
@@ -253,6 +266,45 @@ export function renderDinkHouseEmail(options: DinkHouseEmailOptions): string {
 </html>`;
 }
 
+/**
+ * Full-width hero photo for the slot under the lime divider.
+ * Pass the result as DinkHouseEmailOptions.heroHtml.
+ */
+export function emailHero(src: string, alt: string): string {
+  return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" width="600" style="display: block; width: 100%; max-width: 600px; height: auto; border: 0;" />`;
+}
+
+/**
+ * In-body photo for use inside bodyHtml, with an optional caption.
+ * Email clients need absolute HTTPS URLs for src.
+ */
+export function emailPhoto(
+  src: string,
+  alt: string,
+  caption?: string,
+): string {
+  return `
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 24px 0;">
+      <tr>
+        <td style="padding: 0; font-size: 0; line-height: 0;">
+          <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" width="520" style="display: block; width: 100%; max-width: 520px; height: auto; border: 0;" />
+        </td>
+      </tr>
+      ${
+        caption
+          ? `
+      <tr>
+        <td style="padding: 10px 0 0; font-family: ${fontStack()}; font-size: 12px; line-height: 1.5; color: ${BRAND.muted};">
+          ${escapeHtml(caption)}
+        </td>
+      </tr>
+          `
+          : ""
+      }
+    </table>
+  `;
+}
+
 function receiptRow(
   label: string,
   value: string,
@@ -268,6 +320,10 @@ function receiptRow(
       </td>
     </tr>
   `;
+}
+
+export function emailPanel(innerHtml: string, title?: string): string {
+  return panel(innerHtml, title);
 }
 
 function panel(innerHtml: string, title?: string): string {

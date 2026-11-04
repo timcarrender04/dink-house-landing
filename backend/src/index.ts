@@ -11,6 +11,8 @@ import {
   resubscribeNewsletter,
 } from "./routes/crowdfunding.js";
 import { createCheckout, stripeWebhook } from "./routes/stripe.js";
+import { triggerWeeklyEmail, weeklyEmailStatus } from "./routes/weekly-email.js";
+import { startWeeklyEmailCron } from "./lib/weekly-cron.js";
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
@@ -54,6 +56,8 @@ app.post("/api/stripe/create-checkout", createCheckout);
 app.post("/api/newsletter/confirm", confirmNewsletter);
 app.post("/api/newsletter/unsubscribe", unsubscribeNewsletter);
 app.post("/api/newsletter/resubscribe", resubscribeNewsletter);
+app.get("/internal/weekly-email", weeklyEmailStatus);
+app.post("/internal/weekly-email", triggerWeeklyEmail);
 
 app.use(
   (
@@ -69,4 +73,5 @@ app.use(
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Backend listening on http://0.0.0.0:${port}`);
+  startWeeklyEmailCron();
 });

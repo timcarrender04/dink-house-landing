@@ -244,6 +244,12 @@ export async function stripeWebhook(req: Request, res: Response) {
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+  const kind = session.metadata?.kind;
+
+  if (kind === "membership" || kind === "registration" || kind === "event") {
+    return;
+  }
+
   const contributionId = session.metadata?.contribution_id;
   const backerId = session.metadata?.backer_id;
 

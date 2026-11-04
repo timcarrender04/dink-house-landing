@@ -56,6 +56,10 @@ services:
       BREVO_API_KEY: ${BREVO_API_KEY}
       BREVO_FROM_EMAIL: ${BREVO_FROM_EMAIL:-contact@thedinkhouse.com}
       BREVO_SMTP_USER: ${BREVO_SMTP_USER}
+      WEEKLY_SERIES_START: ${WEEKLY_SERIES_START:-2026-09-21}
+      WEEKLY_CRON_TZ: ${WEEKLY_CRON_TZ:-America/Chicago}
+      WEEKLY_CRON_ENABLED: ${WEEKLY_CRON_ENABLED:-true}
+      WEEKLY_CRON_SECRET: ${WEEKLY_CRON_SECRET:-}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3001/health"]
