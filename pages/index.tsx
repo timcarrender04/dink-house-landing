@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import NextHead from "next/head";
+import { useRouter } from "next/router";
 import { Button } from "@heroui/button";
 import {
   ArrowRight,
@@ -47,13 +48,38 @@ const FACILITY_FEATURES = [
 ] as const;
 
 export default function IndexPage() {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [signupSource, setSignupSource] = useState("website");
 
   useEffect(() => {
     // Trigger animations on mount
     setIsLoaded(true);
   }, []);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const fromPath = router.pathname === "/newsletter";
+    const fromQuery = router.query.join === "newsletter";
+    const fromHash = window.location.hash === "#join";
+
+    if (!fromPath && !fromQuery && !fromHash) return;
+
+    setSignupSource("flyer");
+    setIsModalOpen(true);
+
+    if (!fromQuery) return;
+
+    const { join: _join, ...rest } = router.query;
+
+    void router.replace(
+      { pathname: router.pathname, query: rest },
+      undefined,
+      { shallow: true },
+    );
+  }, [router.isReady, router.pathname, router.query.join]);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -219,7 +245,11 @@ export default function IndexPage() {
       <FAQsSection />
 
       {/* Waitlist Modal */}
-      <WaitlistModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <WaitlistModal
+        isOpen={isModalOpen}
+        source={signupSource}
+        onClose={handleCloseModal}
+      />
     </DefaultLayout>
   );
 }

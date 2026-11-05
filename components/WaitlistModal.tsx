@@ -12,9 +12,14 @@ import { Input } from "@heroui/input";
 interface WaitlistModalProps {
   isOpen: boolean;
   onClose: () => void;
+  source?: string;
 }
 
-const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
+const WaitlistModal: React.FC<WaitlistModalProps> = ({
+  isOpen,
+  onClose,
+  source = "website",
+}) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -76,7 +81,7 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
           email: formData.email.trim().toLowerCase(),
           firstName: formData.firstName.trim(),
           lastName: formData.lastName.trim(),
-          source: "website",
+          source,
         }),
       });
 
