@@ -238,7 +238,7 @@ export function renderDinkHouseEmail(options: DinkHouseEmailOptions): string {
                 ${BRAND.name}
               </p>
               <p style="margin: 0 0 18px; font-family: ${fontStack()}; font-size: 13px; color: ${BRAND.muted};">
-                ${BRAND.tagline} · Coming 2026 · Central Texas
+                ${BRAND.tagline} · Coming 2027 · Central Texas
               </p>
               <p style="margin: 0 0 18px;">
                 ${socialLinks()}

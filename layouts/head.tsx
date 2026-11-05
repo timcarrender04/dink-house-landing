@@ -7,10 +7,10 @@ import { CLOUDFRONT_URL } from "@/config/media-urls";
 export const Head = () => {
   return (
     <NextHead>
-      <title>{siteConfig.name} - Coming Soon 2025</title>
+      <title>{siteConfig.name} - Coming Soon 2027</title>
       <meta
         key="title"
-        content={`${siteConfig.name} - Coming Soon 2025`}
+        content={`${siteConfig.name} - Coming Soon 2027`}
         property="og:title"
       />
       <meta content={siteConfig.description} property="og:description" />

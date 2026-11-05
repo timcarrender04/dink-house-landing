@@ -61,7 +61,7 @@ export default function DefaultLayout({
           <div className="border-t border-gray-800 mt-6 pt-4">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <p className="text-gray-400 text-sm">
-                © 2025 The Dink House - All Rights Reserved
+                © 2027 The Dink House - All Rights Reserved
               </p>
               <div className="flex items-center gap-2 mt-2 md:mt-0">
                 <span className="text-dink-lime text-2xl">★</span>

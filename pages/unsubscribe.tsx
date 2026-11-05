@@ -84,7 +84,7 @@ export default function Unsubscribe() {
                 <ul className="space-y-2 text-gray-300">
                   <li>🎯 Exclusive pickleball tips from pros</li>
                   <li>🏆 Early access to tournaments and events</li>
-                  <li>💚 First dibs on court bookings when we open in 2026</li>
+                  <li>💚 First dibs on court bookings when we open in 2027</li>
                   <li>📰 Community news and updates</li>
                 </ul>
               </div>

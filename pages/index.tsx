@@ -81,7 +81,7 @@ export default function IndexPage() {
               radius="full"
               variant="solid"
             >
-              Coming Soon - Opening 2026
+              Coming Soon - Opening 2027
             </Button>
 
             <div className="flex flex-col gap-6">

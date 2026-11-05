@@ -90,7 +90,7 @@ export default function ConfirmSubscription() {
                     ✅ You&apos;ll receive exclusive pickleball tips & content
                   </li>
                   <li>
-                    🎯 Get early access to court bookings when we open in 2026
+                    🎯 Get early access to court bookings when we open in 2027
                   </li>
                   <li>🏆 Be first to know about tournaments and events</li>
                   <li>💚 Join a community of passionate pickleball players</li>

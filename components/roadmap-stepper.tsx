@@ -22,7 +22,7 @@ export default function RoadmapStepper() {
       title: (
         <div className="flex flex-col">
           <span className="font-semibold">Breaking Ground</span>
-          <span className="text-tiny text-primary">February 2026</span>
+          <span className="text-tiny text-primary">February 2027</span>
           <span className="text-tiny text-default-400 hidden md:block mt-1">
             Construction Begins
           </span>
