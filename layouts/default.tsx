@@ -1,5 +1,6 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import NextLink from "next/link";
 import { Button } from "@heroui/button";
 
 import { Head } from "./head";
@@ -14,14 +15,16 @@ const ResubscribeModal = dynamic(
 
 export default function DefaultLayout({
   children,
+  title,
 }: {
   children: React.ReactNode;
+  title?: string;
 }) {
   const [isResubscribeModalOpen, setIsResubscribeModalOpen] = useState(false);
 
   return (
     <div className="relative flex flex-col min-h-screen">
-      <Head />
+      <Head title={title} />
       <Navbar />
       <main className="flex-grow">{children}</main>
       <footer className="w-full bg-black text-white py-8">
@@ -63,6 +66,20 @@ export default function DefaultLayout({
               <p className="text-gray-400 text-sm">
                 © 2027 The Dink House - All Rights Reserved
               </p>
+              <div className="flex items-center gap-4 mt-2 md:mt-0">
+                <NextLink
+                  className="text-gray-400 text-sm hover:text-dink-lime"
+                  href="/privacy"
+                >
+                  Privacy
+                </NextLink>
+                <NextLink
+                  className="text-gray-400 text-sm hover:text-dink-lime"
+                  href="/account-deletion"
+                >
+                  Delete account
+                </NextLink>
+              </div>
               <div className="flex items-center gap-2 mt-2 md:mt-0">
                 <span className="text-dink-lime text-2xl">★</span>
                 <span className="text-dink-lime text-3xl">★</span>

@@ -4,15 +4,13 @@ import NextHead from "next/head";
 import { siteConfig } from "@/config/site";
 import { CLOUDFRONT_URL } from "@/config/media-urls";
 
-export const Head = () => {
+export const Head = ({ title }: { title?: string }) => {
+  const pageTitle = title ?? `${siteConfig.name} - Coming Soon 2027`;
+
   return (
     <NextHead>
-      <title>{siteConfig.name} - Coming Soon 2027</title>
-      <meta
-        key="title"
-        content={`${siteConfig.name} - Coming Soon 2027`}
-        property="og:title"
-      />
+      <title>{pageTitle}</title>
+      <meta key="title" content={pageTitle} property="og:title" />
       <meta content={siteConfig.description} property="og:description" />
       <meta content={siteConfig.description} name="description" />
       <meta
