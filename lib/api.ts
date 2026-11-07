@@ -2,7 +2,7 @@ import { logger } from "@/lib/logger";
 
 // API configuration
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://api.dinkhousepb.com";
+  process.env.NEXT_PUBLIC_API_URL || "https://api.thedinkhousepb.com";
 const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 // API response types

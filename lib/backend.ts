@@ -1,10 +1,10 @@
 /**
- * Server-side URL for the Prisma Express backend.
- * Coolify compose: BACKEND_URL=http://backend:3001
+ * Server-side URL for dink-house-backend.
+ * Production: BACKEND_URL=https://api.thedinkhousepb.com
  * Local: BACKEND_URL=http://localhost:3001
  */
 export function getBackendUrl(): string {
-  const url = process.env.BACKEND_URL || "http://localhost:3001";
+  const url = process.env.BACKEND_URL || "https://api.thedinkhousepb.com";
 
   return url.replace(/\/$/, "");
 }

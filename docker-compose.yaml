@@ -1,11 +1,11 @@
-# Coolify Docker Compose — Next.js landing + Prisma Express backend
+# Coolify Docker Compose — Next.js landing.
+# API calls go to dink-house-backend at https://api.thedinkhousepb.com.
 #
 # Coolify UI checklist:
 # 1. Domain on service `web` only: https://thedinkhousepb.com:3000
 # 2. Do NOT set a shared PORT env var
-# 3. DATABASE_URL must be Runtime (not Build-only) and enabled for BOTH web + backend
-# 4. Uncheck "Available at Buildtime" for secrets (STRIPE_*, BREVO_*, SENDGRID_*, DATABASE_URL)
-# 5. No custom networks: block — Coolify manages the stack network
+# 3. Uncheck "Available at Buildtime" for secrets
+# 4. No custom networks: block — Coolify manages the stack network
 
 services:
   web:
@@ -18,9 +18,8 @@ services:
       NODE_ENV: production
       PORT: "3000"
       HOSTNAME: "0.0.0.0"
-      BACKEND_URL: http://backend:3001
-      # Required at RUNTIME on web (Prisma). In Coolify: Runtime + shared/both services.
-      DATABASE_URL: ${DATABASE_URL:?}
+      BACKEND_URL: ${BACKEND_URL:-https://api.thedinkhousepb.com}
+      DATABASE_URL: ${DATABASE_URL:-}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://thedinkhousepb.com}
       SITE_URL: ${SITE_URL:-https://thedinkhousepb.com}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
@@ -28,8 +27,6 @@ services:
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:-}
       RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-5}
       RATE_LIMIT_PER_HOUR: ${RATE_LIMIT_PER_HOUR:-50}
-    depends_on:
-      - backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000"]
@@ -37,33 +34,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    expose:
-      - "3001"
-    environment:
-      NODE_ENV: production
-      PORT: "3001"
-      HOSTNAME: "0.0.0.0"
-      DATABASE_URL: ${DATABASE_URL:?}
-      SITE_URL: ${SITE_URL:-https://thedinkhousepb.com}
-      CORS_ORIGIN: ${CORS_ORIGIN:-https://thedinkhousepb.com,https://www.thedinkhousepb.com}
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-      BREVO_API_KEY: ${BREVO_API_KEY}
-      BREVO_FROM_EMAIL: ${BREVO_FROM_EMAIL:-contact@thedinkhouse.com}
-      BREVO_SMTP_USER: ${BREVO_SMTP_USER}
-      WEEKLY_SERIES_START: ${WEEKLY_SERIES_START:-2026-09-21}
-      WEEKLY_CRON_TZ: ${WEEKLY_CRON_TZ:-America/Chicago}
-      WEEKLY_CRON_ENABLED: ${WEEKLY_CRON_ENABLED:-true}
-      WEEKLY_CRON_SECRET: ${WEEKLY_CRON_SECRET:-}
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3001/health"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 25s

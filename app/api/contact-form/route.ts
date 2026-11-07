@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { getBackendUrl } from "../../../lib/backend";
 import { logger } from "../../../lib/logger";
-import { insertContactInquiry } from "../../../lib/backend-forms";
 
 export const dynamic = "force-dynamic";
 
@@ -119,41 +119,39 @@ export async function POST(req: NextRequest) {
         ? clientIp
         : null;
 
-    const result = await insertContactInquiry({
-      firstName: String(firstName).trim(),
-      lastName: String(lastName).trim(),
-      email: String(email).trim().toLowerCase(),
-      message: String(message).trim(),
-      phone: phone ? String(phone).trim() : undefined,
-      company: company ? String(company).trim() : undefined,
-      subject: subject ? String(subject).trim() : undefined,
-      ip: ipForDb,
-      userAgent: req.headers.get("user-agent"),
-      referer: req.headers.get("referer"),
+    const response = await fetch(`${getBackendUrl()}/api/contact-form`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        firstName: String(firstName).trim(),
+        lastName: String(lastName).trim(),
+        email: String(email).trim().toLowerCase(),
+        message: String(message).trim(),
+        phone: phone ? String(phone).trim() : undefined,
+        company: company ? String(company).trim() : undefined,
+        subject: subject ? String(subject).trim() : undefined,
+        ip: ipForDb,
+        userAgent: req.headers.get("user-agent"),
+        referrer: req.headers.get("referer"),
+      }),
+      cache: "no-store",
     });
+    const result = (await response.json()) as {
+      success?: boolean;
+      message?: string;
+      submissionId?: string;
+    };
 
-    if (!result.ok) {
+    if (!response.ok || !result.success) {
       logger.error("Contact form insert:", result.message);
 
       return NextResponse.json(
-        { success: false, message: result.message },
-        { status: result.status },
+        { success: false, message: result.message || "Failed to store submission" },
+        { status: response.status || 500 },
       );
     }
 
-    logger.info("Contact form submitted:", {
-      email,
-      submissionId: result.submissionId,
-    });
-
-    return NextResponse.json({
-      success: true,
-      message:
-        "Thank you for your message! We will get back to you within 24 hours.",
-      inquiry_id: result.submissionId,
-      submissionId: result.submissionId,
-      confirmationSent: true,
-    });
+    return NextResponse.json(result);
   } catch (error) {
     logger.error("Contact form route error:", error);
 

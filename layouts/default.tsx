@@ -79,6 +79,12 @@ export default function DefaultLayout({
                 >
                   Delete account
                 </NextLink>
+                <NextLink
+                  className="text-gray-400 text-sm hover:text-dink-lime"
+                  href="/test"
+                >
+                  Test the app
+                </NextLink>
               </div>
               <div className="flex items-center gap-2 mt-2 md:mt-0">
                 <span className="text-dink-lime text-2xl">★</span>

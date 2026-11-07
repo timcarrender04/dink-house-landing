@@ -1,82 +1,39 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { logger } from "../../../lib/logger";
-import { upsertLaunchSubscriber } from "../../../lib/backend-forms";
+import { getBackendUrl } from "../../../lib/backend";
 
 export const dynamic = "force-dynamic";
-
-type ContactData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
 
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as Record<string, unknown>;
-    const { firstName, lastName, email } = body;
-
-    if (!firstName || !String(firstName).trim()) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Validation error",
-          error: "First name is required",
-        },
-        { status: 400 },
-      );
-    }
-
-    if (!lastName || !String(lastName).trim()) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Validation error",
-          error: "Last name is required",
-        },
-        { status: 400 },
-      );
-    }
-
-    if (!email || !String(email).trim()) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Validation error",
-          error: "Email is required",
-        },
-        { status: 400 },
-      );
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(String(email))) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Validation error",
-          error: "Invalid email format",
-        },
-        { status: 400 },
-      );
-    }
-
-    const contactData: ContactData = {
-      firstName: String(firstName).trim(),
-      lastName: String(lastName).trim(),
-      email: String(email).trim().toLowerCase(),
+    const response = await fetch(`${getBackendUrl()}/api/subscribers`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        referer: req.headers.get("referer") || "",
+      },
+      body: JSON.stringify({
+        firstName: body.firstName,
+        lastName: body.lastName,
+        email: body.email,
+        source: "website",
+      }),
+      cache: "no-store",
+    });
+    const result = (await response.json()) as {
+      success?: boolean;
+      duplicate?: boolean;
+      message?: string;
+      error?: string;
+    };
+    const contactData = {
+      firstName: String(body.firstName ?? "").trim(),
+      lastName: String(body.lastName ?? "").trim(),
+      email: String(body.email ?? "").trim().toLowerCase(),
     };
 
-    const result = await upsertLaunchSubscriber({
-      firstName: contactData.firstName,
-      lastName: contactData.lastName,
-      email: contactData.email,
-      source: "website",
-      referrerUrl: req.headers.get("referer"),
-    });
-
-    if (result.ok && result.duplicate) {
+    if (result.success && result.duplicate) {
       return NextResponse.json({
         success: true,
         message:
@@ -86,20 +43,16 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    if (!result.ok) {
-      logger.error("Contact (newsletter) route:", result.message);
-
+    if (!result.success) {
       return NextResponse.json(
         {
           success: false,
-          message: result.message,
-          error: result.message,
+          message: result.error || result.message || "Failed to subscribe",
+          error: result.error || result.message || "Failed to subscribe",
         },
-        { status: result.status },
+        { status: response.status || 500 },
       );
     }
-
-    logger.info("Newsletter subscription saved via Supabase");
 
     return NextResponse.json({
       success: true,
@@ -109,16 +62,13 @@ export async function POST(req: NextRequest) {
       data: contactData,
     });
   } catch (error) {
-    logger.error("Contact route error:", error);
-
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
+    console.error("Contact route error:", error);
 
     return NextResponse.json(
       {
         success: false,
         message: "Internal server error",
-        error: `Failed to process newsletter subscription: ${errorMessage}`,
+        error: "Failed to process newsletter subscription",
       },
       { status: 500 },
     );
