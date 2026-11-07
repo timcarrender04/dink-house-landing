@@ -5,6 +5,7 @@ import DefaultLayout from "@/layouts/default";
 const FIELD =
   "w-full px-4 py-3 bg-black border-2 border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-dink-lime focus:border-dink-lime transition-all disabled:opacity-50";
 const NOTE_MAX = 1000;
+const TESTFLIGHT_URL = "https://testflight.apple.com/join/yVPcwQae";
 
 type Result = { type: "success" | "error"; text: string };
 
@@ -19,6 +20,7 @@ export default function TestAppPage() {
   const [honeypot, setHoneypot] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
+  const [showTestFlight, setShowTestFlight] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -29,8 +31,11 @@ export default function TestAppPage() {
       return;
     }
 
+    const requestedIphone = iphone;
+
     setLoading(true);
     setResult(null);
+    setShowTestFlight(false);
 
     try {
       const response = await fetch("/api/app-testers", {
@@ -68,6 +73,7 @@ export default function TestAppPage() {
             ? "You're already on the tester list."
             : "You're on the tester list."),
       });
+      setShowTestFlight(requestedIphone);
 
       if (!data.duplicate) {
         setFirstName("");
@@ -112,12 +118,12 @@ export default function TestAppPage() {
                 Request access below with the email on your app store account.
               </li>
               <li>
-                We add you in TestFlight for iPhone or Google Play for Android.
-                That can take a few days.
+                On iPhone, the TestFlight link appears as soon as you submit.
+                Open it on that iPhone and install the app.
               </li>
               <li>
-                Apple or Google emails you an invite. Install the app and tell
-                us what breaks.
+                On Android, we add you in Google Play. That can take a few
+                days. Google emails you an invite.
               </li>
             </ol>
           </section>
@@ -198,8 +204,8 @@ export default function TestAppPage() {
                   onChange={(e) => setAppleEmail(e.target.value)}
                 />
                 <span className="text-xs text-gray-500">
-                  Use the email on the Apple ID signed in on your iPhone.
-                  TestFlight invites only go to that account.
+                  Use the email on the Apple ID signed in on your iPhone. Open
+                  the TestFlight link on that phone.
                 </span>
               </label>
             )}
@@ -277,13 +283,33 @@ export default function TestAppPage() {
                 <p className="font-semibold">{result.text}</p>
               </div>
             )}
+
+            {result?.type === "success" && showTestFlight && (
+              <div className="p-4 border-l-4 bg-dink-lime/10 border-dink-lime text-gray-100 space-y-3">
+                <p>
+                  Open this on the iPhone signed in with that Apple ID.
+                </p>
+                <p className="break-all select-all font-mono text-sm text-dink-lime">
+                  {TESTFLIGHT_URL}
+                </p>
+                <a
+                  className="inline-block px-8 py-3 bg-dink-lime text-black font-bold uppercase tracking-wider hover:bg-[#9FE600] transition-colors"
+                  href={TESTFLIGHT_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Open TestFlight
+                </a>
+              </div>
+            )}
           </form>
 
           <section>
             <p className="text-sm text-gray-500">
-              Requesting access does not add you to the newsletter, and we never
-              send the invite ourselves. It comes from Apple or Google once we
-              add your account.
+              Requesting access does not add you to the newsletter. iPhone
+              testers get the TestFlight link on this page after they submit.
+              Android testers get a Play Console invite from Google once we add
+              the account.
             </p>
           </section>
         </div>
