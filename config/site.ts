@@ -34,6 +34,10 @@ export const siteConfig = {
       href: "/campaign",
     },
     {
+      label: "MONEYBALL",
+      href: "/moneyball",
+    },
+    {
       label: "FAQs",
       href: "/#faqs",
     },
@@ -50,6 +54,10 @@ export const siteConfig = {
     {
       label: "Campaign",
       href: "/campaign",
+    },
+    {
+      label: "Moneyball",
+      href: "/moneyball",
     },
     {
       label: "FAQs",

@@ -6,6 +6,8 @@ const FIELD =
   "w-full px-4 py-3 bg-black border-2 border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-dink-lime focus:border-dink-lime transition-all disabled:opacity-50";
 const NOTE_MAX = 1000;
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/yVPcwQae";
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.thedinkhouse.member&hl=en-US&ah=tpfakINLlP_pCn5ILV4B1xPdDA8";
 
 type Result = { type: "success" | "error"; text: string };
 
@@ -21,6 +23,7 @@ export default function TestAppPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [showTestFlight, setShowTestFlight] = useState(false);
+  const [showPlayStore, setShowPlayStore] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -32,10 +35,12 @@ export default function TestAppPage() {
     }
 
     const requestedIphone = iphone;
+    const requestedAndroid = android;
 
     setLoading(true);
     setResult(null);
     setShowTestFlight(false);
+    setShowPlayStore(false);
 
     try {
       const response = await fetch("/api/app-testers", {
@@ -65,15 +70,22 @@ export default function TestAppPage() {
         );
       }
 
+      const installLinks = [
+        requestedIphone ? "TestFlight" : "",
+        requestedAndroid ? "Play Store" : "",
+      ].filter(Boolean);
+      const installHint = installLinks.length
+        ? ` Open the ${installLinks.join(" and ")} link below on that phone.`
+        : "";
+
       setResult({
         type: "success",
-        text:
-          data.message ||
-          (data.duplicate
-            ? "You're already on the tester list."
-            : "You're on the tester list."),
+        text: data.duplicate
+          ? `You're already on the tester list.${installHint}`
+          : `You're on the tester list.${installHint}`,
       });
       setShowTestFlight(requestedIphone);
+      setShowPlayStore(requestedAndroid);
 
       if (!data.duplicate) {
         setFirstName("");
@@ -122,8 +134,8 @@ export default function TestAppPage() {
                 Open it on that iPhone and install the app.
               </li>
               <li>
-                On Android, we add you in Google Play. That can take a few
-                days. Google emails you an invite.
+                On Android, the Play Store link appears as soon as you submit.
+                Open it on that phone and install the app.
               </li>
             </ol>
           </section>
@@ -227,7 +239,7 @@ export default function TestAppPage() {
                 />
                 <span className="text-xs text-gray-500">
                   Use the Google account signed in to the Play Store on your
-                  phone. Play invites only go to that account.
+                  phone. Open the Play Store link on that phone.
                 </span>
               </label>
             )}
@@ -302,14 +314,34 @@ export default function TestAppPage() {
                 </a>
               </div>
             )}
+
+            {result?.type === "success" && showPlayStore && (
+              <div className="p-4 border-l-4 bg-dink-lime/10 border-dink-lime text-gray-100 space-y-3">
+                <p>
+                  Open this on the Android phone signed in with that Google
+                  account.
+                </p>
+                <p className="break-all select-all font-mono text-sm text-dink-lime">
+                  {PLAY_STORE_URL}
+                </p>
+                <a
+                  className="inline-block px-8 py-3 bg-dink-lime text-black font-bold uppercase tracking-wider hover:bg-[#9FE600] transition-colors"
+                  href={PLAY_STORE_URL}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Open Play Store
+                </a>
+              </div>
+            )}
           </form>
 
           <section>
             <p className="text-sm text-gray-500">
               Requesting access does not add you to the newsletter. iPhone
               testers get the TestFlight link on this page after they submit.
-              Android testers get a Play Console invite from Google once we add
-              the account.
+              Android testers get the Play Store link on this page after they
+              submit.
             </p>
           </section>
         </div>
