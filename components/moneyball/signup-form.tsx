@@ -9,10 +9,11 @@ import {
   type GuestErrors,
 } from "./player-fields";
 import {
+  ApiFailure,
   errorText,
   formatCurrency,
+  formatDupr,
   readApi,
-  type Level,
   type PublicMoneyball,
 } from "./shared";
 
@@ -37,10 +38,8 @@ function hasErrors(errors: GuestErrors): boolean {
 export function SignupForm({ event, onChanged }: Props) {
   const teamsFull = event.teamsLeft === 0;
   const [mode, setMode] = useState<Mode>(teamsFull ? "solo" : "team");
-  const [you, setYou] = useState<GuestDraft>(() => emptyGuest(event.band));
-  const [partner, setPartner] = useState<GuestDraft>(() =>
-    emptyGuest(event.band),
-  );
+  const [you, setYou] = useState<GuestDraft>(emptyGuest);
+  const [partner, setPartner] = useState<GuestDraft>(emptyGuest);
   const [waiver, setWaiver] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [youErrors, setYouErrors] = useState<GuestErrors>({});
@@ -51,10 +50,6 @@ export function SignupForm({ event, onChanged }: Props) {
   const [done, setDone] = useState(false);
 
   const activeMode: Mode = teamsFull ? "solo" : mode;
-  const withLevel = (draft: GuestDraft): GuestDraft => ({
-    ...draft,
-    level: event.band ?? draft.level,
-  });
 
   const switchMode = (next: Mode) => {
     setMode(next);
@@ -65,8 +60,8 @@ export function SignupForm({ event, onChanged }: Props) {
   };
 
   const startOver = () => {
-    setYou(emptyGuest(event.band));
-    setPartner(emptyGuest(event.band));
+    setYou(emptyGuest());
+    setPartner(emptyGuest());
     setWaiver(false);
     setBanner(null);
     setDone(false);
@@ -75,11 +70,13 @@ export function SignupForm({ event, onChanged }: Props) {
   const handleSubmit = async (submitEvent: React.FormEvent) => {
     submitEvent.preventDefault();
 
-    const self = withLevel(you);
-    const other = withLevel(partner);
-    const nextYou = validateGuest(self, "your");
+    const self = you;
+    const other = partner;
+    const nextYou = validateGuest(self, "your", event);
     const nextPartner =
-      activeMode === "team" ? validateGuest(other, "your partner's") : {};
+      activeMode === "team"
+        ? validateGuest(other, "your partner's", event)
+        : {};
 
     if (
       activeMode === "team" &&
@@ -150,15 +147,16 @@ export function SignupForm({ event, onChanged }: Props) {
         const data = await readApi<{
           waiting: boolean;
           alreadyWaiting: boolean;
-          band: Level;
+          dupr: number;
         }>(response);
+        const near = `a solo player near DUPR ${formatDupr(data.dupr)}`;
 
         setBanner({
           type: "success",
           text: data.alreadyWaiting
-            ? `You're already on the list. We'll email you as soon as another ${data.band} player signs up.`
+            ? `You're already on the list. We'll email you as soon as ${near} signs up.`
             : data.waiting
-              ? `You're on the list. We'll email you as soon as another ${data.band} player signs up.`
+              ? `You're on the list. We'll email you as soon as ${near} signs up.`
               : "We found you a partner. Check your email for their details and your payment link.",
         });
       }
@@ -167,6 +165,19 @@ export function SignupForm({ event, onChanged }: Props) {
       setLoading(false);
       onChanged();
     } catch (error) {
+      // The backend judges ratings (one already on file wins over a typed one),
+      // so its sentence goes next to the rating it is about as well.
+      const code = error instanceof ApiFailure ? error.code : undefined;
+
+      if (code === "dupr_needed" || code === "dupr_range") {
+        setYouErrors({ dupr: errorText(error) });
+      } else if (
+        code === "partner_dupr_needed" ||
+        code === "partner_dupr_range"
+      ) {
+        setPartnerErrors({ dupr: errorText(error) });
+      }
+
       setBanner({ type: "error", text: errorText(error) });
       setLoading(false);
       onChanged();
@@ -259,7 +270,7 @@ export function SignupForm({ event, onChanged }: Props) {
         <p className="text-gray-300">
           {activeMode === "team"
             ? `Enter with a partner. You pay the ${formatCurrency(event.teamFee)} team fee by card now, and your team's spot is locked in.`
-            : `No partner? Sign up free. We pair you with another solo player at your level and email you both. You pay nothing now and ${formatCurrency(event.halfFee)} once you're matched.`}
+            : `No partner? Sign up free. We pair you with another solo player rated within half a point of your DUPR and email you both. You pay nothing now and ${formatCurrency(event.halfFee)} once you're matched.`}
         </p>
 
         <PlayerFields
@@ -268,7 +279,7 @@ export function SignupForm({ event, onChanged }: Props) {
           errors={youErrors}
           idPrefix="you"
           legend="You"
-          lockedLevel={event.band}
+          limits={event}
           value={you}
           onChange={setYou}
         />
@@ -280,7 +291,7 @@ export function SignupForm({ event, onChanged }: Props) {
             errors={partnerErrors}
             idPrefix="partner"
             legend="Your partner"
-            lockedLevel={event.band}
+            limits={event}
             value={partner}
             onChange={setPartner}
           />

@@ -1,41 +1,86 @@
 import {
-  LEVELS,
-  levelLabel,
+  DUPR_HIGHEST,
+  DUPR_LOWEST,
+  formatDupr,
+  hasDuprRange,
   type Gender,
   type Guest,
-  type Level,
+  type PublicMoneyball,
 } from "./shared";
 
 export const FIELD =
   "w-full px-4 py-3 bg-black border-2 border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-dink-lime focus:border-dink-lime transition-all disabled:opacity-50";
 
-/** A person as typed so far: the selects start empty. */
+/** A person as typed so far: the select starts empty and the rating is text. */
 export type GuestDraft = {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
   gender: Gender | "";
-  level: Level | "";
+  dupr: string;
+  duprId: string;
 };
 
 export type GuestErrors = Partial<Record<keyof Guest, string>>;
 
-export function emptyGuest(level: Level | null): GuestDraft {
+/** The event's rating limits, as the public event carries them. */
+export type DuprLimits = Pick<
+  PublicMoneyball,
+  "duprMin" | "duprMax" | "duprRange"
+>;
+
+export function emptyGuest(): GuestDraft {
   return {
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     gender: "",
-    level: level ?? "",
+    dupr: "",
+    duprId: "",
   };
 }
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// One digit, then up to two decimals: "3", "3.5", "3.75".
+const RATING = /^\d(\.\d{1,2})?$/;
+
+/** The typed rating as a number, or null when it is not a DUPR rating. */
+export function parseDupr(typed: string): number | null {
+  const value = typed.trim();
+
+  if (!RATING.test(value)) return null;
+
+  const rating = Number(value);
+
+  return rating >= DUPR_LOWEST && rating <= DUPR_HIGHEST ? rating : null;
+}
+
+/**
+ * The sentence to show when a valid rating is outside the event's range.
+ * The backend has the last word: a rating already on file wins over a typed one.
+ */
+export function duprRangeError(typed: string, limits: DuprLimits): string {
+  const rating = parseDupr(typed);
+
+  if (rating === null || !hasDuprRange(limits)) return "";
+
+  const tooLow = limits.duprMin !== null && rating < limits.duprMin;
+  const tooHigh = limits.duprMax !== null && rating > limits.duprMax;
+
+  return tooLow || tooHigh
+    ? `This Moneyball is for DUPR ${limits.duprRange}.`
+    : "";
+}
+
 /** The same checks the backend makes. `whose` is "your" or "your partner's". */
-export function validateGuest(draft: GuestDraft, whose: string): GuestErrors {
+export function validateGuest(
+  draft: GuestDraft,
+  whose: string,
+  limits: DuprLimits,
+): GuestErrors {
   const errors: GuestErrors = {};
 
   if (!draft.firstName.trim()) errors.firstName = `Enter ${whose} first name.`;
@@ -47,7 +92,15 @@ export function validateGuest(draft: GuestDraft, whose: string): GuestErrors {
     errors.phone = `Enter ${whose} phone number with area code.`;
   }
   if (!draft.gender) errors.gender = `Choose ${whose} gender.`;
-  if (!draft.level) errors.level = `Choose ${whose} level.`;
+  if (!draft.dupr.trim()) {
+    errors.dupr = `Enter ${whose} DUPR rating.`;
+  } else if (parseDupr(draft.dupr) === null) {
+    errors.dupr = `Enter ${whose} DUPR rating as a number from ${formatDupr(DUPR_LOWEST)} to ${formatDupr(DUPR_HIGHEST)}, like 3.5.`;
+  } else {
+    const outside = duprRangeError(draft.dupr, limits);
+
+    if (outside) errors.dupr = outside;
+  }
 
   return errors;
 }
@@ -59,7 +112,8 @@ export function toGuest(draft: GuestDraft): Guest {
     email: draft.email.trim().toLowerCase(),
     phone: draft.phone.trim(),
     gender: draft.gender as Gender,
-    level: draft.level as Level,
+    dupr: Number(draft.dupr.trim()),
+    ...(draft.duprId.trim() ? { duprId: draft.duprId.trim() } : {}),
   };
 }
 
@@ -69,8 +123,8 @@ type Props = {
   idPrefix: string;
   value: GuestDraft;
   errors: GuestErrors;
-  /** Set when the event is for one level only. */
-  lockedLevel: Level | null;
+  /** The event's DUPR range, checked as the rating is typed. */
+  limits: DuprLimits;
   disabled: boolean;
   /** Off for the partner so the browser doesn't fill in your own details. */
   autoFill: boolean;
@@ -82,13 +136,16 @@ export function PlayerFields({
   idPrefix,
   value,
   errors,
-  lockedLevel,
+  limits,
   disabled,
   autoFill,
   onChange,
 }: Props) {
   const set = <K extends keyof GuestDraft>(key: K, next: GuestDraft[K]) =>
     onChange({ ...value, [key]: next });
+
+  // A rating outside the event's range is flagged as soon as it is typed.
+  const duprError = errors.dupr || duprRangeError(value.dupr, limits);
 
   const describe = (key: keyof Guest) =>
     errors[key] ? `${idPrefix}-${key}-error` : undefined;
@@ -196,36 +253,68 @@ export function PlayerFields({
           {problem("gender")}
         </label>
         <label className="flex flex-col gap-1 text-sm text-gray-300">
-          Level
-          <select
+          DUPR rating
+          <input
             aria-describedby={
-              lockedLevel ? `${idPrefix}-level-note` : describe("level")
+              duprError
+                ? `${idPrefix}-dupr-error ${idPrefix}-dupr-note`
+                : `${idPrefix}-dupr-note`
             }
-            aria-invalid={Boolean(errors.level)}
+            aria-invalid={Boolean(duprError)}
+            autoComplete="off"
             className={FIELD}
-            disabled={disabled || Boolean(lockedLevel)}
-            id={`${idPrefix}-level`}
-            name={`${idPrefix}-level`}
-            value={lockedLevel ?? value.level}
-            onChange={(e) => set("level", e.target.value as Level | "")}
-          >
-            <option value="">Choose one</option>
-            {LEVELS.map((level) => (
-              <option key={level} value={level}>
-                {levelLabel(level)}
-              </option>
-            ))}
-          </select>
-          {lockedLevel ? (
+            disabled={disabled}
+            id={`${idPrefix}-dupr`}
+            inputMode="decimal"
+            maxLength={4}
+            name={`${idPrefix}-dupr`}
+            placeholder="3.50"
+            type="text"
+            value={value.dupr}
+            onChange={(e) => set("dupr", e.target.value)}
+          />
+          {duprError && (
             <span
-              className="text-xs text-gray-500"
-              id={`${idPrefix}-level-note`}
+              className="text-sm text-red-400"
+              id={`${idPrefix}-dupr-error`}
             >
-              This event is for {lockedLevel} players.
+              {duprError}
             </span>
-          ) : (
-            problem("level")
           )}
+          <span className="text-xs text-gray-500" id={`${idPrefix}-dupr-note`}>
+            Don&apos;t have a DUPR rating? Create a free account at{" "}
+            <a
+              className="underline hover:text-dink-lime"
+              href="https://www.dupr.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              dupr.com
+            </a>
+            , or enter your best estimate; staff confirm ratings at check-in.
+          </span>
+        </label>
+        <label className="flex flex-col gap-1 text-sm text-gray-300">
+          DUPR ID
+          <input
+            aria-describedby={`${idPrefix}-duprId-note`}
+            autoCapitalize="characters"
+            autoComplete="off"
+            className={FIELD}
+            disabled={disabled}
+            id={`${idPrefix}-duprId`}
+            maxLength={20}
+            name={`${idPrefix}-duprId`}
+            type="text"
+            value={value.duprId}
+            onChange={(e) => set("duprId", e.target.value)}
+          />
+          <span
+            className="text-xs text-gray-500"
+            id={`${idPrefix}-duprId-note`}
+          >
+            Optional. Found on your DUPR profile; lets us report your matches.
+          </span>
         </label>
       </div>
     </fieldset>

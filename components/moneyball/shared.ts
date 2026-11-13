@@ -1,6 +1,5 @@
 // Shapes the Moneyball API returns, and the small formatters every page shares.
 
-export type Level = "beginner" | "intermediate" | "advanced";
 export type Gender = "male" | "female";
 
 export type Payout = { place: number; percent: number; amount: number };
@@ -11,7 +10,11 @@ export type PublicMoneyball = {
   description: string | null;
   start: string;
   end: string;
-  band: Level | null;
+  /** Lowest and highest DUPR rating allowed in; null on a side with no limit. */
+  duprMin: number | null;
+  duprMax: number | null;
+  /** "Open" when any rating may enter, otherwise e.g. "3.00 to 3.99". */
+  duprRange: string;
   teamFee: number;
   halfFee: number;
   maxTeams: number;
@@ -21,6 +24,7 @@ export type PublicMoneyball = {
   payouts: Payout[];
   payoutLabel: string;
   entriesOpen: boolean;
+  /** Solo players waiting, grouped by rating; `band` is a ready-made label. */
   solosWaiting: { band: string; count: number }[];
 };
 
@@ -30,7 +34,10 @@ export type Guest = {
   email: string;
   phone: string;
   gender: Gender;
-  level: Level;
+  /** Self-reported DUPR rating, 2.00 to 8.00. */
+  dupr: number;
+  /** Their DUPR account ID, when they gave one. */
+  duprId?: string;
 };
 
 export type PayInfo = {
@@ -47,7 +54,9 @@ export type PayInfo = {
 
 export type ApiError = { error?: string; code?: string };
 
-export const LEVELS: Level[] = ["beginner", "intermediate", "advanced"];
+/** The span of the DUPR scale the backend accepts. */
+export const DUPR_LOWEST = 2;
+export const DUPR_HIGHEST = 8;
 
 export const CLUB_TIME_ZONE = "America/Chicago";
 
@@ -99,8 +108,22 @@ export function formatDayTime(iso: string): string {
   return `${formatDay(iso)} at ${formatTime(iso)} CT`;
 }
 
-export function levelLabel(band: string | null): string {
-  return band ? band.charAt(0).toUpperCase() + band.slice(1) : "All levels";
+/** A rating the way DUPR writes it: "3.40". */
+export function formatDupr(rating: number): string {
+  return rating.toFixed(2);
+}
+
+type DuprLimits = Pick<PublicMoneyball, "duprMin" | "duprMax" | "duprRange">;
+
+export function hasDuprRange(event: DuprLimits): boolean {
+  return event.duprMin !== null || event.duprMax !== null;
+}
+
+/** "DUPR 3.00 to 3.99", or "Open to all DUPR ratings" when anyone may enter. */
+export function duprRangeLabel(event: DuprLimits): string {
+  return !event.duprRange || event.duprRange === "Open"
+    ? "Open to all DUPR ratings"
+    : `DUPR ${event.duprRange}`;
 }
 
 export function ordinal(place: number): string {

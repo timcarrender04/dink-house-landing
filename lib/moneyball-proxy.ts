@@ -123,9 +123,21 @@ function text(value: unknown): unknown {
   return typeof value === "string" ? value.trim() : value;
 }
 
+/** A rating as a number. Anything else is left out so the backend asks for it. */
+function rating(value: unknown): number | undefined {
+  if (typeof value === "number")
+    return Number.isFinite(value) ? value : undefined;
+  if (typeof value !== "string" || !value.trim()) return undefined;
+
+  const parsed = Number(value.trim());
+
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
 /** Only the fields the backend reads for one person; anything else is dropped. */
 export function pickGuest(value: unknown): Record<string, unknown> {
   const body = asRecord(value);
+  const duprId = typeof body.duprId === "string" ? body.duprId.trim() : "";
 
   return {
     firstName: text(body.firstName),
@@ -133,7 +145,8 @@ export function pickGuest(value: unknown): Record<string, unknown> {
     email: text(body.email),
     phone: text(body.phone),
     gender: text(body.gender),
-    level: text(body.level),
+    dupr: rating(body.dupr),
+    ...(duprId ? { duprId } : {}),
   };
 }
 

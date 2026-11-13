@@ -7,9 +7,9 @@ import { getBackendUrl } from "@/lib/backend";
 import { logger } from "@/lib/logger";
 import { PurseDisplay } from "@/components/moneyball/purse-display";
 import {
+  duprRangeLabel,
   formatCurrency,
   formatEventWhen,
-  levelLabel,
   plural,
   type PublicMoneyball,
 } from "@/components/moneyball/shared";
@@ -46,7 +46,7 @@ const STEPS = [
   },
   {
     title: "Or come solo",
-    text: "Sign up free. We pair you with another solo player at your level, email you both, and you each pay half.",
+    text: "Sign up free. We pair you with another solo player rated within half a point of your DUPR, email you both, and you each pay half.",
   },
   {
     title: "Play for the purse",
@@ -132,10 +132,10 @@ export default function MoneyballListPage({ events, failed }: Props) {
                     <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-3 text-sm">
                       <div>
                         <dt className="text-xs uppercase tracking-widest text-gray-500">
-                          Level
+                          Rating
                         </dt>
                         <dd className="font-bold text-white">
-                          {levelLabel(event.band)}
+                          {duprRangeLabel(event)}
                         </dd>
                       </div>
                       <div>

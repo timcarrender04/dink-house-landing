@@ -11,9 +11,9 @@ import { PurseDisplay } from "@/components/moneyball/purse-display";
 import { SignupForm } from "@/components/moneyball/signup-form";
 import { useLivePurse } from "@/components/moneyball/use-live-purse";
 import {
+  duprRangeLabel,
   formatCurrency,
   formatEventWhen,
-  levelLabel,
   type PublicMoneyball,
 } from "@/components/moneyball/shared";
 
@@ -179,8 +179,11 @@ function MoneyballEvent({ id, initialEvent, missing }: Props) {
         )}
 
         <header className="mt-6">
-          <p className="text-sm font-bold uppercase tracking-widest text-dink-lime">
-            Moneyball · {levelLabel(event.band)}
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-bold uppercase tracking-widest text-dink-lime">
+            <span>Moneyball · {duprRangeLabel(event)}</span>
+            <span className="border border-dink-lime px-2 py-0.5 text-xs">
+              DUPR event
+            </span>
           </p>
           <h1 className="mb-2 break-words font-display text-4xl uppercase tracking-wider sm:text-6xl">
             {event.title}
@@ -216,7 +219,7 @@ function MoneyballEvent({ id, initialEvent, missing }: Props) {
                 value={`${event.teamsEntered} of ${event.maxTeams}`}
               />
               <Fact label="Spots left" value={String(event.teamsLeft)} />
-              <Fact label="Level" value={levelLabel(event.band)} />
+              <Fact label="Rating" value={duprRangeLabel(event)} />
             </dl>
             {waiting.length > 0 && (
               <ul className="mt-6 space-y-1 border-t border-gray-800 pt-4 text-sm text-gray-300">
@@ -225,8 +228,8 @@ function MoneyballEvent({ id, initialEvent, missing }: Props) {
                     <span className="font-bold text-dink-lime">
                       {group.count}
                     </span>{" "}
-                    {group.band} {group.count === 1 ? "player" : "players"}{" "}
-                    looking for a partner
+                    {group.count === 1 ? "player" : "players"} looking for a
+                    partner · {group.band}
                   </li>
                 ))}
               </ul>
