@@ -15,6 +15,9 @@ export type PublicMoneyball = {
   duprMax: number | null;
   /** "Open" when any rating may enter, otherwise e.g. "3.00 to 3.99". */
   duprRange: string;
+  // Cancellation policy. Optional for a backend that predates it.
+  cancelHours?: number;
+  lateRefundPercent?: number;
   teamFee: number;
   halfFee: number;
   maxTeams: number;
@@ -166,4 +169,15 @@ export class ApiFailure extends Error {
 
 export function errorText(error: unknown): string {
   return error instanceof ApiFailure ? error.message : FALLBACK_ERROR;
+}
+
+// The cancellation policy in one sentence, shown next to every pay button.
+export function refundPolicyText(event: {
+  cancelHours?: number;
+  lateRefundPercent?: number;
+}) {
+  const hours = event.cancelHours ?? 24;
+  const percent = event.lateRefundPercent ?? 50;
+
+  return `Full refund if you withdraw ${hours} hours or more before the start. After that, ${percent}% is refunded. To withdraw, contact the front desk.`;
 }

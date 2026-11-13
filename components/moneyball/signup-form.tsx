@@ -15,6 +15,7 @@ import {
   formatDupr,
   readApi,
   type PublicMoneyball,
+  refundPolicyText,
 } from "./shared";
 
 type Mode = "team" | "solo";
@@ -355,6 +356,10 @@ export function SignupForm({ event, onChanged }: Props) {
             />
           </label>
         </div>
+
+        {event.teamFee > 0 && (
+          <p className="text-xs text-gray-400">{refundPolicyText(event)}</p>
+        )}
 
         <button className={BUTTON} disabled={loading} type="submit">
           {loading

@@ -10,6 +10,7 @@ import {
   formatDayTime,
   readApi,
   type PayInfo,
+  refundPolicyText,
 } from "@/components/moneyball/shared";
 
 const POLL_MS = 2500;
@@ -208,6 +209,7 @@ export default function MoneyballPayPage() {
                     </p>
                   )}
                 </div>
+                <p className="text-xs text-gray-400">{refundPolicyText({})}</p>
                 <button
                   className={BUTTON}
                   disabled={paying}
