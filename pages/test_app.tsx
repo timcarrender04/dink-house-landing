@@ -1,6 +1,10 @@
 import NextHead from "next/head";
 
-import { TEST_APP_LESSONS, testAppVideoUrl } from "@/config/test-app-tutorials";
+import {
+  TEST_APP_GUIDE_PDF,
+  TEST_APP_LESSONS,
+  testAppVideoUrl,
+} from "@/config/test-app-tutorials";
 import DefaultLayout from "@/layouts/default";
 
 export default function TestAppPage() {
@@ -10,9 +14,29 @@ export default function TestAppPage() {
         <meta content="noindex, nofollow" name="robots" />
       </NextHead>
       <section className="mx-auto max-w-3xl px-4 py-12 md:py-16">
-        <h1 className="text-4xl font-bold uppercase tracking-wider mb-3">
+        <h1 className="text-4xl font-bold uppercase tracking-wider mb-6">
           App walkthrough
         </h1>
+        <div className="mb-10 border-2 border-gray-700">
+          <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-700">
+            <h2 className="text-lg font-bold text-dink-lime">
+              Player test guide
+            </h2>
+            <a
+              className="text-sm font-bold uppercase tracking-wider text-dink-lime hover:text-white"
+              href={TEST_APP_GUIDE_PDF}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Open PDF
+            </a>
+          </div>
+          <iframe
+            className="w-full h-[75vh] min-h-[480px] bg-white"
+            src={`${TEST_APP_GUIDE_PDF}#toolbar=1&navpanes=0&view=FitH`}
+            title="The Dink House player test guide"
+          />
+        </div>
         <p className="text-gray-400 mb-10">
           Short recordings of the member app, in the same order as the player
           test. Use a real iPhone or Android phone and a player login. Allow

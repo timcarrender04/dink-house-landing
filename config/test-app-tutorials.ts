@@ -1,6 +1,8 @@
 export const TEST_APP_VIDEO_BASE =
   "https://videos.thedinkhousepb.com/tutorials";
 
+export const TEST_APP_GUIDE_PDF = "/player-test-guide.pdf";
+
 export type TestAppLesson = {
   file: string;
   title: string;
