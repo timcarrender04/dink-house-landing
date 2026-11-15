@@ -13,7 +13,6 @@ import { BOOK_A_COURT_CHAPTER } from "@/config/book-a-court-tutorial";
 import { SESSIONS_CHAPTER } from "@/config/sessions-tutorial";
 import { MY_BOOKINGS_CHAPTER } from "@/config/my-bookings-tutorial";
 import { OPEN_PLAY_CHAPTER } from "@/config/open-play-tutorial";
-import { OPEN_PLAY_SURVEY_CHAPTER } from "@/config/open-play-survey-tutorial";
 import { LADDER_CHAPTER } from "@/config/ladder-tutorial";
 import { SOCIAL_CHAPTER } from "@/config/social-tutorial";
 import { PROFILE_CHAPTER } from "@/config/profile-tutorial";
@@ -22,6 +21,7 @@ import { STAFF_CHAPTER } from "@/config/staff-tutorial";
 import { ACCOUNT_RECOVERY_CHAPTER } from "@/config/account-recovery-tutorial";
 
 const CHAPTERS = [
+  NEW_PLAYER_CHAPTER,
   GETTING_IN_CHAPTER,
   HOME_CHAPTER,
   CHECK_IN_CHAPTER,
@@ -30,11 +30,9 @@ const CHAPTERS = [
   SESSIONS_CHAPTER,
   MY_BOOKINGS_CHAPTER,
   OPEN_PLAY_CHAPTER,
-  OPEN_PLAY_SURVEY_CHAPTER,
   LADDER_CHAPTER,
   SOCIAL_CHAPTER,
   PROFILE_CHAPTER,
-  NEW_PLAYER_CHAPTER,
   STAFF_CHAPTER,
   ACCOUNT_RECOVERY_CHAPTER,
 ];
