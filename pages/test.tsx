@@ -338,12 +338,12 @@ export default function TestAppPage() {
 
             {result?.type === "success" && (
               <div className="p-4 border-l-4 bg-dink-lime/10 border-dink-lime text-gray-100 space-y-3">
-                <p>Watch the walkthrough before you start the tests.</p>
+                <p>Open the walkthrough before you start the tests.</p>
                 <NextLink
                   className="inline-block px-8 py-3 bg-dink-lime text-black font-bold uppercase tracking-wider hover:bg-[#9FE600] transition-colors"
                   href="/test_app"
                 >
-                  Watch the walkthrough
+                  Open the walkthrough
                 </NextLink>
               </div>
             )}

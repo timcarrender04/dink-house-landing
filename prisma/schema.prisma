@@ -158,6 +158,11 @@ model players {
   city                    String?
   state                   String?
   stripe_customer_id      String?                   @unique
+  default_payment_method_id String?
+  card_brand              String?
+  card_last4              String?
+  card_exp_month          Int?                      @db.SmallInt
+  card_exp_year           Int?                      @db.SmallInt
   gender                  gender?                   @default(male)
   profile_picture_url     String?
   use_default_picture     Boolean?                  @default(true)
