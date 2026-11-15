@@ -14,8 +14,9 @@ export default function TestAppPage() {
           App walkthrough
         </h1>
         <p className="mt-4 max-w-2xl text-gray-400">
-          Getting in, home after you sign in, checking in at the desk, and the
-          door.
+          Every part of the app, from getting in and checking in to booking
+          courts and sessions, open play, the ladder, chat, your profile,
+          signing up as a new player, staff tools, and account recovery.
         </p>
         <div className="mt-8">
           <GettingInWalkthrough />

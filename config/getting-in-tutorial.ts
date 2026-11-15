@@ -205,7 +205,8 @@ export const GETTING_IN_STEPS: TutorialStep[] = [
           {
             id: "have-account",
             label: "I already have an account",
-            insight: "If you already have an account, that button takes you back.",
+            insight:
+              "If you already have an account, that button takes you back.",
             top: 88.8,
             left: 5.9,
             width: 88.2,
@@ -284,7 +285,8 @@ export const GETTING_IN_STEPS: TutorialStep[] = [
           {
             id: "every-day",
             label: "Every day",
-            insight: "Every day is selected. These are the sessions for the next two weeks.",
+            insight:
+              "Every day is selected. These are the sessions for the next two weeks.",
             top: 23.8,
             left: 5.5,
             width: 18,
@@ -328,7 +330,8 @@ export const GETTING_IN_STEPS: TutorialStep[] = [
           {
             id: "details",
             label: "Beginner Open Play",
-            insight: "Beginner Open Play is Monday, 9 to 11, on courts 6 and 7.",
+            insight:
+              "Beginner Open Play is Monday, 9 to 11, on courts 6 and 7.",
             top: 14.8,
             left: 5.5,
             width: 88.7,

@@ -33,7 +33,8 @@ export const DOOR_CHAPTER: TutorialChapter = {
             {
               id: "read-sticker",
               label: "Read the sticker",
-              insight: "Hold your phone on the door sticker, then tap Read the sticker.",
+              insight:
+                "Hold your phone on the door sticker, then tap Read the sticker.",
               top: 27.3,
               left: 5.9,
               width: 88.2,
@@ -52,7 +53,8 @@ export const DOOR_CHAPTER: TutorialChapter = {
             {
               id: "cannot-read",
               label: "Cannot read a sticker",
-              insight: "If this phone cannot read a sticker, you will see that here.",
+              insight:
+                "If this phone cannot read a sticker, you will see that here.",
               top: 26.6,
               left: 5,
               width: 83,
