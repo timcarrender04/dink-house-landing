@@ -47,7 +47,7 @@ export const GETTING_IN_STEPS: TutorialStep[] = [
         image: `${MEDIA}/01-sign-in.png`,
         audio: `${MEDIA}/01-sign-in.mp3`,
         narration:
-          "This is The Dink House app. Enter your email and password, then tap Sign in. If this phone says you were signed in somewhere else, that is fine. Sign in again here. From this screen you can also create an account, email yourself a code, look at the schedule, or reset a password.",
+          "This is The Dink House app. Enter your email and password, then tap Sign in. If this phone says you were signed in somewhere else, that is fine. Sign in again here. From this screen you can also create an account, email yourself a code, look at the schedule, or reset a password. If you turned on Face ID or a fingerprint in Profile, that button is above the password, and the phone asks once when you arrive. Password and an emailed code still work below it. If a saved sign-in can't be picked up, you see Couldn't reconnect, with Try again and Sign out.",
         hotspots: [
           {
             id: "email-password",

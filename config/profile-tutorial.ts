@@ -6,7 +6,7 @@ export const PROFILE_CHAPTER: TutorialChapter = {
   id: "profile",
   label: "Profile",
   intro:
-    "Your member card, automatic check-in, membership, devices, and your account.",
+    "Your member card, automatic check-in, membership, devices, Face ID or fingerprint sign-in, and your account.",
   steps: [
     {
       id: "you",
@@ -18,7 +18,7 @@ export const PROFILE_CHAPTER: TutorialChapter = {
           image: `${MEDIA}/01-profile.png`,
           audio: `${MEDIA}/01-profile.mp3`,
           narration:
-            "Profile is the last tab. This is you, Maria Garcia. Your email, DHL 3.2 Intermediate, and Premium through July 18, 2027. From here, you can open your check-in code, automatic check-in, membership, devices, and account. Sign out is at the bottom.",
+            "Profile is the last tab. This is you, Maria Garcia. Your email, DHL 3.2 Intermediate, and Premium through July 18, 2027. From here, you can open your check-in code, automatic check-in, membership, devices, and account. Sign out is at the bottom. On a phone with face or fingerprint unlock enrolled, Sign in with Face ID or fingerprint is a switch between Devices and Account. Turn it on to skip the password on this phone. It stays hidden on the web, and when nothing is enrolled.",
           hotspots: [
             {
               id: "you",
@@ -34,7 +34,7 @@ export const PROFILE_CHAPTER: TutorialChapter = {
               id: "menu",
               label: "Check-in code to account",
               insight:
-                "From here, you can open your check-in code, automatic check-in, membership, devices, and account.",
+                "Check-in code, automatic check-in, membership, devices, and account. With face or fingerprint unlock enrolled, Sign in with Face ID or fingerprint is a switch between Devices and Account.",
               top: 32.1,
               left: 5.5,
               width: 89.0,

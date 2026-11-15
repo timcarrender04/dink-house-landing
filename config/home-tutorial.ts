@@ -18,7 +18,7 @@ export const HOME_CHAPTER: TutorialChapter = {
           image: `${MEDIA}/01-home.png`,
           audio: `${MEDIA}/01-home.mp3`,
           narration:
-            "Once you are signed in, this is home. Tuesday Night Ladder is open, Tuesdays at 6:30. Tap Sign up if you want in. Your member card shows your name, your email, your DHL rating, and your membership through date. Unlock the door works while the club is open. Check in shows your code at the desk. Book a court reserves your next game.",
+            "Once you are signed in, this is home. Tuesday Night Ladder is open, Tuesdays at 6:30. Tap Sign up if you want in. Your member card shows your name, your email, your DHL rating, and your membership through date. Unlock the door works while the club is open. Check in shows your code at the desk. Book a court reserves your next game. An app update keeps you signed in. What's new waits until you're here, so it doesn't cover sign-in or the staff desk.",
           hotspots: [
             {
               id: "ladder",

@@ -6,7 +6,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
   id: "social",
   label: "Social",
   intro:
-    "Group chats for your sessions, a line to the club, friends, and alerts.",
+    "Group chats for your sessions, a line to the club, friends, and alerts. Archive a chat, tap links, and tag a session with #.",
   steps: [
     {
       id: "chats",
@@ -18,7 +18,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
           image: `${MEDIA}/01-social-p1.png`,
           audio: `${MEDIA}/01-social.mp3`,
           narration:
-            "Social is chats, friends, and alerts. Alerts shows 4. Chats are club news, a line to the staff, and a group chat for each session you're booked into. Club announcements, message the club, and your sessions are all here.",
+            "Social is chats, friends, and alerts. Alerts shows 4. Chats are club news, a line to the staff, a chat for each session you're booked into, and groups with your friends. New group chat starts one. Hold a chat to mute it or archive it. Archived chats sit in a collapsed Archived section, and come back when someone posts. Announcements and Message the club can't be archived. In a direct message or a friend group, tap # or type # to tag a session you can join. The message shows a card, and tapping it opens that session. A cancelled session says Cancelled.",
           hotspots: [
             {
               id: "tabs",
@@ -42,7 +42,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
               id: "about",
               label: "Club news and chats",
               insight:
-                "Chats are club news, a line to the staff, and a group chat for each session you're booked into.",
+                "Club news, a line to the staff, a chat for each session you're booked into, and groups with your friends. New group chat starts one.",
               top: 27.1,
               left: 4.0,
               width: 86.6,
@@ -52,7 +52,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
               id: "list",
               label: "Your chats",
               insight:
-                "Club announcements, message the club, and your sessions are all here.",
+                "Hold a chat to mute it or archive it. Archived chats sit under Archived and come back when someone posts. Announcements and Message the club stay put. In a direct message or a friend group, # tags a session.",
               top: 34.2,
               left: 5.5,
               width: 89.0,
@@ -159,7 +159,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
           image: `${MEDIA}/03-ladder-chat.png`,
           audio: `${MEDIA}/03-ladder-chat.mp3`,
           narration:
-            "After you agree, the ladder chat is the group for that session. People are sorting Tuesday. Type at the bottom and send.",
+            "After you agree, the ladder chat is the group for that session. People are sorting Tuesday. Type at the bottom and send. A web address in a message opens in the browser, an email address opens mail, and a dinkhouse link opens that screen in the app. Hold a link and the reply menu still opens. The more button next to the bell archives this chat.",
           hotspots: [
             {
               id: "messages",
@@ -174,7 +174,8 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
             {
               id: "message",
               label: "Message",
-              insight: "Type at the bottom and send.",
+              insight:
+                "Type at the bottom and send. Links open in the browser, mail, or the app. The more button next to the bell archives this chat.",
               top: 92.0,
               left: 3.0,
               width: 94.0,
@@ -235,13 +236,13 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
           image: `${MEDIA}/06-message-actions.png`,
           audio: `${MEDIA}/06-message-actions.mp3`,
           narration:
-            "Hold a message for reply, report to staff, or block that player. Cancel closes it.",
+            "Hold a message for reply, report to staff, or block that player. Cancel closes it. Holding a link still opens this same menu.",
           hotspots: [
             {
               id: "actions",
               label: "Reply, report, block",
               insight:
-                "Hold a message for reply, report to staff, or block that player.",
+                "Hold a message for reply, report to staff, or block that player. Holding a link still opens this menu.",
               top: 42.6,
               left: 28.8,
               width: 49.2,
