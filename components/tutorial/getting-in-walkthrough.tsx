@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { GETTING_IN_CHAPTER } from "@/config/getting-in-tutorial";
 import { HOME_CHAPTER } from "@/config/home-tutorial";
+import { DHL_CHAPTER } from "@/config/dhl-tutorial";
 import { CHECK_IN_CHAPTER } from "@/config/check-in-tutorial";
 import { DOOR_CHAPTER } from "@/config/door-tutorial";
 import { BOOK_A_COURT_CHAPTER } from "@/config/book-a-court-tutorial";
@@ -26,6 +27,7 @@ const CHAPTERS = [
   NEW_PLAYER_CHAPTER,
   GETTING_IN_CHAPTER,
   HOME_CHAPTER,
+  DHL_CHAPTER,
   CHECK_IN_CHAPTER,
   DOOR_CHAPTER,
   BOOK_A_COURT_CHAPTER,

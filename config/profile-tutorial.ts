@@ -6,7 +6,7 @@ export const PROFILE_CHAPTER: TutorialChapter = {
   id: "profile",
   label: "Profile",
   intro:
-    "Your member card, automatic check-in, membership, devices, Face ID or fingerprint sign-in, and your account.",
+    "Your member card, your DHL timeline, automatic check-in, membership, payment details, My deals, devices, Face ID or fingerprint sign-in, and your account.",
   steps: [
     {
       id: "you",
@@ -48,6 +48,44 @@ export const PROFILE_CHAPTER: TutorialChapter = {
               left: 5.5,
               width: 89.0,
               height: 6.0,
+            },
+          ],
+        },
+        {
+          id: "level",
+          label: "Level and deals",
+          image: `${MEDIA}/09-level-and-deals.png`,
+          audio: `${MEDIA}/09-level-and-deals.mp3`,
+          narration:
+            "The DHL pill on your card opens your level timeline. Payment details is where you keep Cash App, Venmo, PayPal, and Zelle for marketplace sales. My deals is what you bought and sold.",
+          hotspots: [
+            {
+              id: "pill",
+              label: "DHL 2.9 Beginner",
+              insight: "The DHL pill opens your level timeline.",
+              top: 24.5,
+              left: 42,
+              width: 32,
+              height: 4,
+            },
+            {
+              id: "pay",
+              label: "Payment details",
+              insight:
+                "Cash App, Venmo, PayPal, and Zelle for marketplace sales.",
+              top: 63.5,
+              left: 5,
+              width: 90,
+              height: 7.5,
+            },
+            {
+              id: "deals",
+              label: "My deals",
+              insight: "My deals is what you bought and sold.",
+              top: 71.6,
+              left: 5,
+              width: 90,
+              height: 6.4,
             },
           ],
         },

@@ -6,7 +6,7 @@ export const HOME_CHAPTER: TutorialChapter = {
   id: "home",
   label: "Home",
   intro:
-    "Once you are signed in, this is home. Your member card, the shortcuts, and the tabs along the bottom.",
+    "Once you are signed in, this is home. Your member card, My DHL when you have rated games, the shortcuts, and the tabs along the bottom.",
   steps: [
     {
       id: "home",

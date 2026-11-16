@@ -6,7 +6,7 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
   id: "social",
   label: "Social",
   intro:
-    "Group chats for your sessions, a line to the club, friends, and alerts. Archive a chat, tap links, and tag a session with #.",
+    "Group chats for your sessions, a line to the club, friends, and alerts. Archive a chat, tap links, tag a session with #, and see when a message has been read.",
   steps: [
     {
       id: "chats",
@@ -256,6 +256,88 @@ export const SOCIAL_CHAPTER: TutorialChapter = {
               left: 32.2,
               width: 35.6,
               height: 3.2,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "read",
+      label: "Read",
+      frames: [
+        {
+          id: "read",
+          label: "Read",
+          image: `${MEDIA}/16-read.png`,
+          audio: `${MEDIA}/16-read.mp3`,
+          narration:
+            "In a direct message, Read shows under your newest message once the other person has opened it. Here, How much again, is marked Read.",
+          hotspots: [
+            {
+              id: "message",
+              label: "How much again?",
+              insight:
+                "Read shows under your newest message once the other person has opened it.",
+              top: 70.3,
+              left: 58,
+              width: 40,
+              height: 8.2,
+            },
+          ],
+        },
+        {
+          id: "menu",
+          label: "Hold a message",
+          image: `${MEDIA}/17-read-by-menu.png`,
+          audio: `${MEDIA}/17-read-by-menu.mp3`,
+          narration:
+            "Hold one of your messages. Read by is in the menu, with Reply and Delete. Cancel closes it.",
+          hotspots: [
+            {
+              id: "read-by",
+              label: "Read by",
+              insight: "Read by is in the menu, with Reply and Delete.",
+              top: 47,
+              left: 12,
+              width: 76,
+              height: 7,
+            },
+            {
+              id: "cancel",
+              label: "Cancel",
+              insight: "Cancel closes it.",
+              top: 61,
+              left: 12,
+              width: 76,
+              height: 6,
+            },
+          ],
+        },
+        {
+          id: "list",
+          label: "Who has read it",
+          image: `${MEDIA}/18-read-by-list.png`,
+          audio: `${MEDIA}/18-read-by-list.mp3`,
+          narration:
+            "Read by lists who has opened this message. This one was read by Tim Carrender. Close returns to the chat. In a group, the same list names each person, and the line under the message can say Read by everyone.",
+          hotspots: [
+            {
+              id: "name",
+              label: "Tim Carrender",
+              insight: "This message was read by Tim Carrender.",
+              top: 42,
+              left: 12,
+              width: 76,
+              height: 12,
+            },
+            {
+              id: "close",
+              label: "Close",
+              insight: "Close returns to the chat.",
+              top: 56,
+              left: 14,
+              width: 72,
+              height: 6,
             },
           ],
         },
