@@ -28,8 +28,8 @@ Your `.env.local` needs these keys:
 3. Add to `.env.local`:
 
 ```bash
-STRIPE_SECRET_KEY=sk_test_51xxxxxxxxxxxxx
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51xxxxxxxxxxxxx
+STRIPE_SECRET_KEY=<your sk_test_ key>
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<your pk_test_ key>
 ```
 
 #### B. Get Supabase Service Key
@@ -39,7 +39,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51xxxxxxxxxxxxx
 3. Add to `.env.local`:
 
 ```bash
-SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS...
+SUPABASE_SERVICE_KEY=<your service_role key>
 ```
 
 ### 3. Start the Development Server
@@ -82,13 +82,13 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook
 The `stripe listen` command will output something like:
 
 ```
-> Ready! Your webhook signing secret is whsec_abc123def456... (^C to quit)
+> Ready! Your webhook signing secret is whsec_... (^C to quit)
 ```
 
 **Copy that `whsec_...` value** and add it to your `.env.local`:
 
 ```bash
-STRIPE_WEBHOOK_SECRET=whsec_abc123def456...
+STRIPE_WEBHOOK_SECRET=<the whsec_ value printed above>
 ```
 
 #### Step 4: Restart Your Dev Server

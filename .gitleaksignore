@@ -1,0 +1,10 @@
+# Placeholder values in the setup guide's history (truncated example JWT, "xxxx" Stripe key,
+# "whsec_abc123..." webhook secret). None of them were ever real credentials.
+6f83b33f1ea63942bd10fd555373c0e4d458f717:DEV-SETUP.md:generic-api-key:42
+6f83b33f1ea63942bd10fd555373c0e4d458f717:DEV-SETUP.md:generic-api-key:91
+6f83b33f1ea63942bd10fd555373c0e4d458f717:DEV-SETUP.md:stripe-access-token:31
+# Supabase anon key (role "anon", shipped to browsers as NEXT_PUBLIC_SUPABASE_ANON_KEY).
+8776f5aff9f6a98d24ab0f795fb54362326dfe26:.env.local.bak:jwt:3
+# SendGrid API key. SendGrid returned 401 for this key, the app no longer uses
+# SendGrid, and no replacement was issued. History was not rewritten.
+8776f5aff9f6a98d24ab0f795fb54362326dfe26:.env.local.bak:sendgrid-api-token:7

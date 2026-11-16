@@ -48,7 +48,8 @@ async function completePendingContributions() {
 
       if (updateError) {
         console.error(
-          `Error completing contribution ${contribution.id}:`,
+          "Error completing contribution %s:",
+          contribution.id,
           updateError,
         );
       } else {
