@@ -15,8 +15,9 @@ export default function TestAppPage() {
         </h1>
         <p className="mt-4 max-w-2xl text-gray-400">
           Every part of the app, from getting in and checking in to booking
-          courts and sessions, open play, the ladder, chat, your profile,
-          signing up as a new player, staff tools, and account recovery.
+          courts and sessions, open play and its survey, the ladder, chat,
+          the market, your profile, signing up as a new player, staff tools,
+          and account recovery.
         </p>
         <div className="mt-8">
           <GettingInWalkthrough />

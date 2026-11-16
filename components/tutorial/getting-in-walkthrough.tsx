@@ -13,8 +13,10 @@ import { BOOK_A_COURT_CHAPTER } from "@/config/book-a-court-tutorial";
 import { SESSIONS_CHAPTER } from "@/config/sessions-tutorial";
 import { MY_BOOKINGS_CHAPTER } from "@/config/my-bookings-tutorial";
 import { OPEN_PLAY_CHAPTER } from "@/config/open-play-tutorial";
+import { OPEN_PLAY_SURVEY_CHAPTER } from "@/config/open-play-survey-tutorial";
 import { LADDER_CHAPTER } from "@/config/ladder-tutorial";
 import { SOCIAL_CHAPTER } from "@/config/social-tutorial";
+import { MARKET_CHAPTER } from "@/config/market-tutorial";
 import { PROFILE_CHAPTER } from "@/config/profile-tutorial";
 import { NEW_PLAYER_CHAPTER } from "@/config/new-player-tutorial";
 import { STAFF_CHAPTER } from "@/config/staff-tutorial";
@@ -30,8 +32,10 @@ const CHAPTERS = [
   SESSIONS_CHAPTER,
   MY_BOOKINGS_CHAPTER,
   OPEN_PLAY_CHAPTER,
+  OPEN_PLAY_SURVEY_CHAPTER,
   LADDER_CHAPTER,
   SOCIAL_CHAPTER,
+  MARKET_CHAPTER,
   PROFILE_CHAPTER,
   STAFF_CHAPTER,
   ACCOUNT_RECOVERY_CHAPTER,
