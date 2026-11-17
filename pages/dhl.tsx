@@ -81,6 +81,29 @@ const RULES = [
   },
 ] as const;
 
+const WHY_DHL = [
+  {
+    icon: "solar:user-plus-bold",
+    title: "Everyone has one from day one",
+    text: "You don't need a DUPR account or a history of rated matches. Brand-new players get a level at signup and are placed after five games.",
+  },
+  {
+    icon: "solar:play-circle-bold",
+    title: "Every open play game counts",
+    text: "Scores are entered right here at the club, so your everyday rec games move your level. It updates as soon as a game is confirmed.",
+  },
+  {
+    icon: "solar:map-point-bold",
+    title: "It reflects play at our courts",
+    text: "DHL only learns from games at The Dink House, against the people you'll actually see on court. That's what we need to balance open play and level-tagged sessions.",
+  },
+  {
+    icon: "solar:tuning-2-bold",
+    title: "Rules built for a club",
+    text: "We wrote the rules so players want to play anyone: winners never drop, a good loss counts, and mismatches barely move. Every game is saved, so if we tune the rules we can recalculate everyone's level fairly.",
+  },
+] as const;
+
 const FAQ = [
   {
     q: "Is DHL the same as DUPR?",
@@ -280,6 +303,50 @@ export default function DhlPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Why DHL over DUPR */}
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <h2 className="mb-2 text-3xl font-bold sm:text-4xl">
+          Why DHL and not <span className="text-dink-lime">just DUPR?</span>
+        </h2>
+        <p className="mb-8 max-w-2xl text-default-500">
+          DUPR is great for comparing players across clubs and tournaments. For
+          day-to-day play at The Dink House, we wanted a level that every member
+          has and that every game here updates.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {WHY_DHL.map((w) => (
+            <div
+              key={w.title}
+              className="flex gap-4 rounded-2xl border border-zinc-800 bg-zinc-950 p-5"
+            >
+              <Icon
+                className="flex-none text-dink-lime"
+                icon={w.icon}
+                width={28}
+              />
+              <div>
+                <h3 className="mb-1 font-bold text-white">{w.title}</h3>
+                <p className="text-sm leading-6 text-default-500">{w.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 flex gap-4 rounded-2xl border border-dink-lime/40 bg-dink-lime/5 p-5">
+          <Icon
+            className="flex-none text-dink-lime"
+            icon="solar:info-circle-bold"
+            width={28}
+          />
+          <p className="text-sm leading-6 text-gray-300">
+            <span className="font-bold text-white">
+              We still use DUPR where it fits.
+            </span>{" "}
+            DUPR-rated events and Moneyball use your DUPR rating, and a verified
+            DUPR gives you a head start on your DHL so you skip placement.
+          </p>
         </div>
       </section>
 
