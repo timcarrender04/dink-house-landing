@@ -45,46 +45,27 @@ export const siteConfig = {
       label: "CONTACT",
       href: "/contact",
     },
+    {
+      label: "TEST THE APP",
+      href: "/test",
+    },
   ],
   navMenuItems: [
-    // {
-    //   label: "Book Court Time",
-    //   href: "/booking",
-    // },
-    // {
-    //   label: "My Account",
-    //   href: "/account",
-    // },
-    // {
-    //   label: "Memberships",
-    //   href: "/memberships",
-    // },
-    // {
-    //   label: "Lessons & Clinics",
-    //   href: "/lessons",
-    // },
-    // {
-    //   label: "Tournaments",
-    //   href: "/tournaments",
-    // },
-    // {
-    //   label: "League Play",
-    //   href: "/leagues",
-    // },
-    // {
-    //   label: "Pro Shop",
-    //   href: "/shop",
     {
-      label: "Build the Courts",
+      label: "Campaign",
       href: "/campaign",
+    },
+    {
+      label: "FAQs",
+      href: "/#faqs",
     },
     {
       label: "Contact Us",
       href: "/contact",
     },
     {
-      label: "FAQs",
-      href: "/#faqs",
+      label: "Test the app",
+      href: "/test",
     },
   ],
   links: {
