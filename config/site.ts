@@ -52,6 +52,10 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
+      label: "DHL",
+      href: "/dhl",
+    },
+    {
       label: "Campaign",
       href: "/campaign",
     },
