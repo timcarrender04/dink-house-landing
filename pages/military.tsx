@@ -69,6 +69,17 @@ export default function MilitaryPage() {
 
   return (
     <DefaultLayout title="Military PT | The Dink House">
+      <div className="bg-dink-lime text-black">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-1 px-4 py-4 text-center">
+          <p className="font-display text-4xl uppercase leading-none sm:text-5xl">
+            Coming soon
+          </p>
+          <p className="text-sm font-semibold leading-5 sm:text-base">
+            Unit bookings are not open yet. Leave your info and we will keep
+            it.
+          </p>
+        </div>
+      </div>
       <section className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 pt-16 pb-12 sm:px-6 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-8">
         <div className="flex flex-col items-start gap-5">
           <span className="rounded-full bg-dink-lime px-3 py-1 text-xs font-bold uppercase tracking-wider text-black">
