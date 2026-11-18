@@ -55,6 +55,11 @@ const faqs = [
       "While we're finalizing our amenity offerings, we're planning to include player lounges, equipment rental, pro shop items, and refreshment options. Our goal is to create a complete pickleball experience that goes beyond just court time.",
   },
   {
+    title: "Can a unit book the courts for PT?",
+    content:
+      "Yes. Units at Fort Hood can request the whole facility from 0600 to 0800 for Officer PT, Soldier PT, or a unit function. An organizational day is a longer booking, from 0900 to about 1400, and that one is paid. Staff confirms the date and, for an org day, the cost. Submitting a request does not hold the courts.",
+  },
+  {
     title: "Will you host tournaments and events?",
     content:
       "Absolutely! With 11 planned championship-quality courts, The Dink House will be perfectly equipped to host tournaments, leagues, corporate events, and social gatherings. We're excited to become a hub for the pickleball community in Central Texas.",

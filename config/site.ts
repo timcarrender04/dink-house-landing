@@ -30,6 +30,10 @@ export const siteConfig = {
     //   href: "/shop",
     // },
     {
+      label: "MILITARY PT",
+      href: "/military",
+    },
+    {
       label: "DHL",
       href: "/dhl",
     },
@@ -51,6 +55,10 @@ export const siteConfig = {
     },
   ],
   navMenuItems: [
+    {
+      label: "Military PT",
+      href: "/military",
+    },
     {
       label: "DHL",
       href: "/dhl",

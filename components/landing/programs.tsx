@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
+import Link from "next/link";
 import { GraduationCap, PartyPopper, Trophy, Users } from "lucide-react";
 
 import { Reveal, SectionHeading } from "./shared";
@@ -91,6 +92,30 @@ export default function Programs() {
             );
           })}
         </div>
+
+        <Reveal className="mt-6" delay={0.2}>
+          <Link
+            className="group flex flex-col gap-4 rounded-3xl border border-dink-lime/40 bg-black/60 p-6 transition-colors hover:border-dink-lime sm:flex-row sm:items-center sm:justify-between"
+            href="/military"
+          >
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-dink-lime">
+                Fort Hood units
+              </p>
+              <h3 className="mt-2 text-xl font-bold text-white">
+                Military PT and org day
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-default-500">
+                Request the whole facility for Officer PT, Soldier PT, or a unit
+                function from 0600 to 0800. An org day runs from 0900 to about
+                1400 and is paid.
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-dink-lime px-5 py-2 text-sm font-bold uppercase text-black">
+              Request a morning
+            </span>
+          </Link>
+        </Reveal>
       </div>
     </section>
   );
