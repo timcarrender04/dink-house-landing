@@ -22,7 +22,7 @@ const JOBS = [
   },
   {
     title: "Help beginners",
-    body: "Start a shift at open play or a beginner session and show newcomers the paddle stack, scoring and etiquette.",
+    body: "Start a shift at any club event — open play, leagues, clinics, socials — and show newcomers the paddle stack, scoring and etiquette.",
   },
   {
     title: "Turn guests into members",
