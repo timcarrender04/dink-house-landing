@@ -104,7 +104,7 @@ export default function MilitaryPage() {
             radius="full"
             size="lg"
           >
-            Request a morning
+            Leave your info
           </Button>
         </div>
 
@@ -199,11 +199,20 @@ export default function MilitaryPage() {
         id="request"
       >
         <h2 className="mb-2 text-3xl font-bold sm:text-4xl">
-          Request the <span className="text-dink-lime">morning</span>
+          {eventType ? (
+            <span className="text-dink-lime">{eventType}</span>
+          ) : (
+            <>
+              Leave your <span className="text-dink-lime">info</span>
+            </>
+          )}
         </h2>
         <p className="mb-8 text-default-500">
-          Tell us the unit, the point of contact, and the date you want. We
-          save it for when unit bookings open. This does not hold the courts.
+          {eventType === "Org day"
+            ? "An org day is 0900 to about 1400, every court, and that booking is paid. We save your info for when it opens. This does not hold the facility."
+            : eventType
+              ? "This request is 0600–0800, every court. We save your info for when unit mornings open. This does not hold the facility."
+              : "Pick the request, then tell us the unit, the point of contact, and the date. We save it for when bookings open. This does not hold the courts."}
         </p>
         <div className="rounded-3xl border border-white/10 bg-black/60 p-5 sm:p-8">
           <MilitaryRequestForm

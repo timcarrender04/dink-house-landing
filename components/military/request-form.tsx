@@ -73,6 +73,7 @@ export default function MilitaryRequestForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "coming-soon">("idle");
   const [savedEmail, setSavedEmail] = useState("");
+  const [savedType, setSavedType] = useState<MilitaryEventType | "">("");
   const minDate = todayIso();
   const selectedType = eventType ?? form.eventType;
 
@@ -203,6 +204,7 @@ export default function MilitaryRequestForm({
       }
 
       setSavedEmail(payload.email.trim().toLowerCase());
+      setSavedType(type);
       setStatus("coming-soon");
       setForm(EMPTY);
     } catch {
@@ -221,10 +223,10 @@ export default function MilitaryRequestForm({
           Coming soon
         </p>
         <p className="mt-3 max-w-xl text-base leading-7 text-gray-300">
-          We saved your info
-          {savedEmail ? ` for ${savedEmail}` : ""}. Military PT bookings are
-          not open yet, so this does not hold the courts. We will use what you
-          sent when unit mornings start.
+          We saved your {savedType || "request"} info
+          {savedEmail ? ` for ${savedEmail}` : ""}. Bookings are not open yet,
+          so this does not hold the courts. We will use what you sent when{" "}
+          {savedType === "Org day" ? "org days" : "unit mornings"} start.
         </p>
       </div>
     );
@@ -412,7 +414,13 @@ export default function MilitaryRequestForm({
         label="Notes (optional)"
         maxLength={NOTES_MAX}
         name="notes"
-        placeholder="Anything staff should know before confirming the morning."
+        placeholder={
+          selectedType === "Org day"
+            ? "Anything we should know about this org day."
+            : selectedType
+              ? "Anything we should know about this morning."
+              : "Anything we should know about the unit."
+        }
         value={form.notes}
         onValueChange={(value) => setField("notes", value)}
       />
@@ -432,7 +440,11 @@ export default function MilitaryRequestForm({
         size="lg"
         type="submit"
       >
-        Request this morning
+        {selectedType === "Org day"
+          ? "Save this org day"
+          : selectedType
+            ? "Save this morning"
+            : "Save my info"}
       </Button>
     </form>
   );
