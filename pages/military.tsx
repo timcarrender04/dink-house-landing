@@ -191,8 +191,8 @@ export default function MilitaryPage() {
           Request the <span className="text-dink-lime">morning</span>
         </h2>
         <p className="mb-8 text-default-500">
-          Tell us the unit, the point of contact, and the date you want. Staff
-          confirms before the courts are held.
+          Tell us the unit, the point of contact, and the date you want. We
+          save it for when unit bookings open. This does not hold the courts.
         </p>
         <div className="rounded-3xl border border-white/10 bg-black/60 p-5 sm:p-8">
           <MilitaryRequestForm

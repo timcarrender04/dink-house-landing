@@ -71,8 +71,8 @@ export default function MilitaryRequestForm({
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [bookedType, setBookedType] = useState<MilitaryEventType | "">("");
+  const [status, setStatus] = useState<"idle" | "coming-soon">("idle");
+  const [savedEmail, setSavedEmail] = useState("");
   const minDate = todayIso();
   const selectedType = eventType ?? form.eventType;
 
@@ -195,19 +195,17 @@ export default function MilitaryRequestForm({
       };
 
       if (!response.ok || !result.success) {
-        setStatus("error");
         setErrors({
-          submit: result.message || "Could not send the request. Try again.",
+          submit: result.message || "Could not save your info. Try again.",
         });
 
         return;
       }
 
-      setBookedType(type);
-      setStatus("success");
+      setSavedEmail(payload.email.trim().toLowerCase());
+      setStatus("coming-soon");
       setForm(EMPTY);
     } catch {
-      setStatus("error");
       setErrors({
         submit: "Network error. Please try again.",
       });
@@ -216,19 +214,17 @@ export default function MilitaryRequestForm({
     }
   };
 
-  if (status === "success") {
+  if (status === "coming-soon") {
     return (
       <div className="rounded-3xl border border-dink-lime/50 bg-dink-lime/10 p-8">
         <p className="font-display text-4xl uppercase text-white">
-          Request received
+          Coming soon
         </p>
         <p className="mt-3 max-w-xl text-base leading-7 text-gray-300">
-          We have your request. This does not hold the courts. Staff will
-          confirm the{" "}
-          {bookedType === "Org day"
-            ? "0900 to about 1400 org day, including the cost,"
-            : "0600–0800 morning"}{" "}
-          with your point of contact.
+          We saved your info
+          {savedEmail ? ` for ${savedEmail}` : ""}. Military PT bookings are
+          not open yet, so this does not hold the courts. We will use what you
+          sent when unit mornings start.
         </p>
       </div>
     );
@@ -423,8 +419,8 @@ export default function MilitaryRequestForm({
 
       <p className="text-sm leading-6 text-default-500">
         {selectedType === "Org day"
-          ? "An org day uses every court from 0900 to about 1400. It is a paid booking. Sending this request does not hold the facility, and staff confirms the date and the cost with your point of contact."
-          : "The window is fixed: 0600–0800, every court. Sending this request does not hold the facility. Staff confirms the morning with your point of contact."}
+          ? "An org day uses every court from 0900 to about 1400, and that booking is paid. Bookings are not open yet. Sending this saves your info and does not hold the facility."
+          : "The window is fixed: 0600–0800, every court. Bookings are not open yet. Sending this saves your info and does not hold the facility."}
       </p>
 
       {errors.submit && <p className="text-sm text-danger">{errors.submit}</p>}
