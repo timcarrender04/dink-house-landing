@@ -38,6 +38,10 @@ export const siteConfig = {
       href: "/dhl",
     },
     {
+      label: "AMBASSADORS",
+      href: "/ambassadors",
+    },
+    {
       label: "CAMPAIGN",
       href: "/campaign",
     },
