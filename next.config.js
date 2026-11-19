@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
+  // Dev terminal stays quiet: no incoming request logs and no fetch logs.
+  logging: false,
   eslint: {
     ignoreDuringBuilds: true,
   },
